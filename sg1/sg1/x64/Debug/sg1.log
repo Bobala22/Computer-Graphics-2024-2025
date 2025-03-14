@@ -1,0 +1,10 @@
+﻿  sg1.cpp
+D:\grafica\sg1\sg1\sg1.cpp(84,23): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+D:\grafica\sg1\sg1\sg1.cpp(84,18): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+D:\grafica\sg1\sg1\sg1.cpp(120,23): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+D:\grafica\sg1\sg1\sg1.cpp(120,18): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+D:\grafica\sg1\sg1\sg1.cpp(152,23): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+D:\grafica\sg1\sg1\sg1.cpp(152,18): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+D:\grafica\sg1\sg1\sg1.cpp(170,28): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+D:\grafica\sg1\sg1\sg1.cpp(170,23): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+  sg1.vcxproj -> D:\grafica\sg1\x64\Debug\sg1.exe
