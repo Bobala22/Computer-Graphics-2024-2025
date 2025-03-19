@@ -341,65 +341,51 @@ void plotTrisectrix(double (*xFunc)(double, double, double),
                     double (*yFunc)(double, double, double),
                     double a,
                     double b,
-                    double intervalStart = -M_PI / 2,
-                    double intervalEnd = M_PI / 2,
+                    double intervalStart = -pi / 2,
+                    double intervalEnd = pi / 2,
                     double step = 0.03,
                     double scaleX = 1,
                     double scaleY = 1,
-                    GLint /*primitive*/ = GL_LINE_STRIP) // primitive not used here
+                    GLint primitive = GL_LINE_STRIP)
 {
-  // Local structure to hold vertices.
   struct Point2D
   {
     double x, y;
   };
 
-  // Boundaries for clamping.
+  // Boundaries
   const double xMin = -0.95;
   const double yMax = 0.95;
 
-  // Offset to move the plot slightly down and to the RIGHT.
   const double offsetX = 0.05;
   const double offsetY = -0.05;
 
-  // Container to collect curve vertices.
   std::vector<Point2D> curveVertices;
 
-  // Generate vertices along the trisectrix.
   for (double t = intervalStart; t <= intervalEnd; t += step)
   {
-    // Skip the excluded t values.
-    if (fabs(t + M_PI / 6) < 1e-9 || fabs(t - M_PI / 6) < 1e-9)
+    if (fabs(t + pi / 6) < 1e-9 || fabs(t - pi / 6) < 1e-9)
       continue;
 
-    // Compute raw values.
     double rawX = xFunc(a, b, t) * scaleX;
     double rawY = yFunc(a, b, t) * scaleY;
 
-    // Clamp rawY to the top boundary.
     if (rawY > yMax)
       rawY = yMax;
 
-    // Force x to xMin if rawX is too far left.
+    // Stop inf
     double newX = (rawX < xMin) ? xMin : rawX;
     double newY = rawY;
 
-    // Only consider points in the left (x <= 0) and top (y >= 0) quadrant.
+    // take only top left 
     if (!(newX <= 0.0 && newY >= 0.0))
       continue;
 
-    // Store vertex with translation.
     curveVertices.push_back({newX + offsetX, newY + offsetY});
   }
 
-  // Need at least two vertices to form triangles.
-  if (curveVertices.size() < 2)
-    return;
-
-  // Fixed corner at the intersection of left and top boundaries.
   Point2D corner = {xMin + offsetX, yMax + offsetY};
 
-  // Draw triangles with alternating colors.
   int numTriangles = curveVertices.size() - 1;
   int mid = numTriangles / 2;
 
@@ -428,13 +414,12 @@ void plotTrisectrix(double (*xFunc)(double, double, double),
   }
   glEnd();
 
-  // Draw the border curved line along the collected vertices.
+  // Draw the border line
   size_t midIndex = curveVertices.size() / 2;
 
   glLineWidth(2);
 
-  // Draw first half in black.
-  glColor3f(0.0f, 0.0f, 0.0f); // black
+  glColor3f(0.0f, 0.0f, 0.0f); 
   glBegin(GL_LINE_STRIP);
   for (size_t i = 0; i < midIndex; i++)
   {
@@ -442,8 +427,7 @@ void plotTrisectrix(double (*xFunc)(double, double, double),
   }
   glEnd();
 
-  // Draw second half in red.
-  glColor3f(1.0f, 0.0f, 0.0f); // red
+  glColor3f(1.0f, 0.0f, 0.0f); 
   glBegin(GL_LINE_STRIP);
   for (size_t i = midIndex; i < curveVertices.size(); i++)
   {
